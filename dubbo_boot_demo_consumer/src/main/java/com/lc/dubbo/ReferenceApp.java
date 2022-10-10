@@ -15,10 +15,11 @@ import java.util.concurrent.CountDownLatch;
 @SpringBootApplication
 @EnableDubbo
 public class ReferenceApp {
-    @DubboReference
+    @DubboReference(loadbalance = "myLoadBalance")
     private DemoService demoService;
 
     public static void main(String[] args) {
+        System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
         ConfigurableApplicationContext context = SpringApplication.run(ReferenceApp.class, args);
         ReferenceApp app = context.getBean(ReferenceApp.class);
         app.doSay("lc");
